@@ -15,7 +15,7 @@ class PolicySearch_Agent():
             size=(self.state_size, self.action_size),  # weights for simple linear policy: state_space x action_space
             scale=(self.action_range / (2 * self.state_size))) # start producing actions in a decent range
 
-        # Score tracker and learning parameters
+        # Scoring tracker and learning parameters
         self.best_w = None
         self.best_score = -np.inf
         self.noise_scale = 0.1
@@ -30,21 +30,21 @@ class PolicySearch_Agent():
         return state
 
     def step(self, reward, done):
-        # Save experience / reward
+        # Saving experience / reward
         self.total_reward += reward
         self.count += 1
 
-        # Learn, if at end of episode
+        # Learning, if at end of episode
         if done:
             self.learn()
 
     def act(self, state):
-        # Choose action based on given state and policy
+        # Choosing action based on given state and policy
         action = np.dot(state, self.w)  # simple linear policy
         return action
 
     def learn(self):
-        # Learn by random policy search, using a reward-based score
+        # Learning by random policy search, using a reward-based score
         self.score = self.total_reward / float(self.count) if self.count else 0.0
         if self.score > self.best_score:
             self.best_score = self.score
